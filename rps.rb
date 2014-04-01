@@ -5,7 +5,6 @@ require "database.rb"
 
 
 
-
 # class RPS
 #   attr_reader :player1, :player2, :winner
 #   attr_accessor :game_wins, :game_winner
