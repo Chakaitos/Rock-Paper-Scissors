@@ -7,6 +7,8 @@ class User
     @id = @@counter
     @name = name
     @password = options[:password]
+    @match_wins = []
+    @match_loses = []
   end
 
   def set_password(password)
