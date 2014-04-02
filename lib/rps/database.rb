@@ -14,4 +14,5 @@ module RPS
 			@sessions = []
 		end
 	end
+
 end
