@@ -1,29 +1,36 @@
 class Game
-  attr_reader :player1, :player2
+  attr_reader :player1, :player2, :match
+  attr_accessor :choice1, :choice2
 
-  def initialize(player1, player2)
-    @player1 = player1
-    @player2 = player2
+  def initialize(choice1, choice2, mid)
+    @choice1 = choice1
+    @choice2 = choice2
+    @mid = mid 
+    # @player1 = player1
+    # @player2 = player2
+    # @match = match
+
   end
 
- def play(choice1, choice2)
-    if choice1 == choice2
-      "This hand was a tie."
-    elsif choice1 == 'rock' && choice2 == 'paper'
-      Match.player2_wins += 1
-    elsif choice1 == 'rock' && choice2 == 'scissors'
-      @player1_wins += 1
-    elsif choice1 == 'paper' && choice2 == 'rock'
-      @player1_wins += 1
-    elsif choice1 == 'paper' && choice2 == 'scissors'
-      @player2_wins += 1
-    elsif choice1 == 'scissors' && choice2 == 'rock'
-      @player2_wins += 1
-    elsif choice1 == 'scissors' && choice2 == 'paper'
-      @player1_wins += 1
-    else
-      "Invalid choice. Enter 'rock', 'paper' or 'scissors'"
-    end
-  end
+# Main gameplay functions
+ # def play(choice1, choice2)
+ #    if choice1 == choice2
+ #      #Tie (Add functionaliy later)
+ #    elsif choice1 == 'rock' && choice2 == 'paper'
+ #      @match.player2wins += 1
+ #    elsif choice1 == 'rock' && choice2 == 'scissors'
+ #      @match.player1wins += 1
+ #    elsif choice1 == 'paper' && choice2 == 'rock'
+ #      @match.player1_wins += 1
+ #    elsif choice1 == 'paper' && choice2 == 'scissors'
+ #      @match.player2_wins += 1
+ #    elsif choice1 == 'scissors' && choice2 == 'rock'
+ #      @match.player2_wins += 1
+ #    elsif choice1 == 'scissors' && choice2 == 'paper'
+ #      @match.player1_wins += 1
+ #    else
+ #      "You're dumb"
+ #    end
+ #  end
 
 end
