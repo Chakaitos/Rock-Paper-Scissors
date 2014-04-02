@@ -6,7 +6,8 @@ describe 'Database' do
     @db = RPS.db
   end
 
-    it "initializes with 4 data repo" do
+  describe "initialize" do
+    it "initializes with for data repo" do
       expect(@db.users).to eq({})
       expect(@db.matches).to eq({})
       expect(@db.games).to eq({})

@@ -63,6 +63,3 @@ module RPS
 
 
 	end
-
-
-end

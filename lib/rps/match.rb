@@ -1,23 +1,21 @@
 class Match
 attr_reader :player1, :player2, :id
+attr_accessor :player1wins, :player2wins
 @@counter = 0;
-def initialize(player1, player2)
-  @player1 = player1
-  @player2 = player2
-  @@counter+=1
-  @id = @@counter
-  @player1wins = 0
-  @player2wins = 0
-  @games = []
-
-end
-
-def play_game(choice1, choice2)
-  if @player1wins < 3 && @player2wins < 3
-    play(choice1, choice2)
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @@counter+=1
+    @id = @@counter
+    @player1wins = 0
+    @player2wins = 0
+    @games = []
   end
-end
 
-
+  def play_game(choice1, choice2)
+    if @player1wins < 3 && @player2wins < 3
+      play(choice1, choice2)
+    end
+  end
 
 end
