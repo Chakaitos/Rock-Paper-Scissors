@@ -1,4 +1,4 @@
-require './spec/spec_helper.rb'
+require 'spec_helper.rb'
 
 describe 'Database' do
 
@@ -13,7 +13,7 @@ describe 'Database' do
       expect(@db.games).to eq({})
       expect(@db.sessions).to eq([])
     end
-    
+
     it "makes a new user" do
       expect(@db.make_user("sally").name).to eq("sally")
     end
@@ -30,6 +30,7 @@ describe 'Database' do
     end
 
     it "deletes a user" do
+      # binding.pry
       jones = @db.make_user("jonesy")
       expect(@db.delete_user(jones.id)).to eq({})
     end
@@ -115,7 +116,7 @@ describe 'Database' do
         expect(game.winner.id).to eq(joe.id)
       end
 
-      it "creates a new game after a game is complete" do 
+      it "creates a new game after a game is complete" do
         john = User.new("john")
         joe = User.new("joe")
         match = @db.create_match(john,joe)

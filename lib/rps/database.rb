@@ -22,7 +22,7 @@ module RPS
 		end
 
 		def update_user(uid,name)
-		 	user = @users[uid.to_i] 
+		 	user = @users[uid.to_i]
 			user.name = name
 			user
 		end
@@ -31,8 +31,21 @@ module RPS
 			@users[uid.to_i]
 		end
 
+		def get_user_by_name(name)
+			@users.values.find {|user| user.name == name}
+		end
+
+		# def check_password(uid, password)
+		# 	username = @users[uid.to_i]
+		# 	if username.password == password
+		# 		return true
+		# 	else
+		# 		return false
+		# 	end
+		# end
+
 		def delete_user(uid)
-			@users.delete(uid.to_i)
+			@users.delete(uid)
 			@users
 		end
 
@@ -132,4 +145,5 @@ module RPS
 
 
 	end
+
 end
