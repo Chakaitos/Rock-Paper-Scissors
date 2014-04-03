@@ -16,6 +16,7 @@ require_relative 'rps/usecase/list_active_matches.rb'
 require_relative 'rps/usecase/list_invites.rb'
 require_relative 'rps/usecase/list_users.rb'
 require_relative 'rps/usecase/accept_invite.rb'
+require_relative 'rps/usecase/create_invite.rb'
 
 require_relative 'rps/usecase/signup.rb'
 require 'pry-debugger'
