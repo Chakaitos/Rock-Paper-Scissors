@@ -14,7 +14,7 @@ module RPS
 
       invite = @db.create_invite(inviter.id, invitee.id)
 
-      success( :invite => invite, :invitee => invitee, :inviter )
+      success( :invite => invite, :invitee => invitee )
     end
   end
 end
