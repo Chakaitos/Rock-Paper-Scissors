@@ -40,7 +40,7 @@ module RPS
 			invite
 		end
 
-		def create_session(uid)   ###### NEEDS TEST #####
+		def create_session(uid)
 			session = Session.new(uid)
 			@sessions[session.id] = session
 			session
@@ -59,7 +59,7 @@ module RPS
 			@users.values.find {|user| user.name == name}
 		end
 
-		def get_user_by_session(sid)   ##### NEEDS TESTS ####
+		def get_user_by_session(sid)
 			@sessions[sid].user_id
 		end
 
@@ -75,23 +75,23 @@ module RPS
 			@games[gid.to_i]
 		end
 
-		def show_all_games    #### NEEDS TEST ####
+		def show_all_games
 			@games.values
 		end
 
-		def get_invite(iid)    #### NEEDS TEST ####
+		def get_invite(iid)
 			@invites[iid.to_i]
 		end
 
-		def show_all_invites    #### NEEDS TEST ####
+		def show_all_invites
 			@invites.values
 		end
 
-		def get_session(sid)    #### NEEDS TEST ####
+		def get_session(sid)
 			@sessions[sid.to_i]
 		end
 
-		def show_all_sessions    #### NEEDS TEST ####
+		def show_all_sessions
 			@sessions.values
 		end
 
@@ -126,26 +126,26 @@ module RPS
 			@users
 		end
 
-		def delete_match(mid)     #### NEEDS TEST ####
-			@matches.delete(uid)
+		def delete_match(mid)
+			@matches.delete(mid)
 			@matches
 		end
 
-		def delete_game(gid)    #### NEEDS TEST ####
+		def delete_game(gid)
 			@games.delete(gid)
 			@games
 		end
 
-		def delete_invite(iid)     #### NEEDS TEST ####
+		def delete_invite(iid)
 			@invites.delete(iid)
 			@invites
 		end
 
-		def delete_session(sid)    #### NEEDS TEST ####
+		def delete_session(sid)
 			@sessions.delete(sid)
 			@sessions
 		end
-		
+
 
 	# Main gameplay functions
 		def play(gid)
