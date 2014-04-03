@@ -30,29 +30,23 @@ module RPS
 				end
 
 		  	case category
-		  	when 'project'
+		  	when 'invite'
 		  		case action
-					when "list"
-					  RPS::TerminalClient.project_list
-					  command = gets.chomp
 				  when "create"
-					  RPS::TerminalClient.project_create(params)
-					  command = gets.chomp
-					when "show"
-					  RPS::TerminalClient.project_show(params)
-					  command = gets.chomp
-					when "history"
-					  RPS::TerminalClient.project_history(params)
-					  command = gets.chomp
-					when "recruit"
-						RPS::TerminalClient.project_recruit(params)
-					  command = gets.chomp
-					when "employees"
-						RPS::TerminalClient.project_employees(params)
+				  	user_to_invite = params[0]
+					  result = RPS::CreateInvite.run({ :session_id => @session.id, :invitee_id => user_to_invite})
+					  if result.success?
+					  	puts "Invite sent from #{result.inviter.name} to #{result.inviter.name}."
+					  else
+					  	if result.error == :invitee_not_found
+					  		puts "Invitee not found!"
+					  	end
+					  end
 					  command = gets.chomp
 					end
-
 				end
+
+
 			end
 		end
 
@@ -66,6 +60,12 @@ module RPS
   			\tinvite create USERNAME - Invite user with username=USERNAME to play a game
 				\tmatch list"
 		end
+
+
+
+
+
+
 	end
 end
 
