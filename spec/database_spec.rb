@@ -27,12 +27,18 @@ describe 'Database' do
       expect(@db.make_user("sally", "abc").name).to eq("sally")
     end
 
-# TEST NEED TO BE UPDATED FOR PASSWORD
-    # it "updates the user's name" do
-    #  jackie = @db.make_user("jackie")
-    #   @db.update_user(jackie.id,"johnny")
-    #   expect(jackie.name).to eq("johnny")
-    # end
+    it "should be able to change the task name" do
+      user1 = @db.update_user(@user1.id, name: "johnnie", password: "newPassword")
+      user2 = @db.update_user(@user2.id, password: "better_password")
+
+      expect(user1.name).to eq 'johnnie'
+      expect(user1.name).to_not eq 'john'
+      expect(user1.password).to eq 'newPassword'
+      expect(user1.password).to_not eq 'abc'
+
+      expect(user2.password).to eq 'better_password'
+      expect(user2.password).to_not eq 'abc'
+    end
 
     it "gets user based on id" do
       expect(@db.get_user(@user1.id)).to eq(@user1)

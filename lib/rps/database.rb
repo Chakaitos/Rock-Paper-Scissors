@@ -96,9 +96,14 @@ module RPS
 		end
 
 		# Update methods - CRUD
-		def update_user(uid,name)    #### NEED TESTS FOR PASSWORD ####
+		def update_user(uid, options={})
 		 	user = @users[uid.to_i]
-			user.name = name
+			if options[:name]
+				user.name = options[:name]
+			end
+			if
+				user.password = options[:password]
+			end
 			user
 		end
 
