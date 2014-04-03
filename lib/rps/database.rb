@@ -12,68 +12,94 @@ module RPS
 			@matches = {}
 			@games = {}
 			@invites = {}
-			@sessions = []
+			@sessions = {}
 		end
-		#USER CRUD
+
+		# Create methods - CRUD
 		def make_user(name, options={})
 			user = User.new(name, options={})
 			@users[user.id.to_i] = user
 			user
 		end
 
-		def update_user(uid,name)
-		 	user = @users[uid.to_i]
-			user.name = name
-			user
-		end
-
-		def get_user(uid)
-			@users[uid.to_i]
-		end
-
-		def get_user_by_name(name)
-			@users.values.find {|user| user.name == name}
-		end
-
-		# def check_password(uid, password)
-		# 	username = @users[uid.to_i]
-		# 	if username.password == password
-		# 		return true
-		# 	else
-		# 		return false
-		# 	end
-		# end
-
-		def delete_user(uid)
-			@users.delete(uid)
-			@users
-		end
-
-		def show_all_users
-			@users.values
-		end
-
-		#MATCH CRUD
 		def create_match(user1,user2)
 			match = Match.new(user1,user2)
 			@matches[match.id.to_i] = match
 			match
 		end
 
-		def show_all_matches
-			@matches.values
+		def create_game(mid)
+			game = Game.new(mid)
+			@games[game.id] = game
+			game
+		end
+
+		def create_invite(inviter_id, invitee_id)
+			invite = Invite.new(inviter_id, invitee_id)
+			@invites[invite.id] = invite
+			invite
+		end
+
+		def create_session(uid)   ###### NEEDS TEST #####
+			session = Session.new(uid)
+			@sessions[session.id] = session
+			session
+		end
+
+		# Read methods - CRUD
+		def get_user(uid)
+			@users[uid.to_i]
+		end
+
+		def show_all_users
+			@users.values
+		end
+
+		def get_user_by_name(name)
+			@users.values.find {|user| user.name == name}
+		end
+
+		def get_user_by_session(sid)   ##### NEEDS TESTS ####
+			@sessions[sid].user_id
 		end
 
 		def get_match(mid)
 			@matches[mid.to_i]
 		end
 
-		#GAME CRUD
+		def show_all_matches
+			@matches.values
+		end
 
-		def create_game(mid)
-			game = Game.new(mid)
-			@games[game.id] = game
-			game
+		def get_game(gid)
+			@games[gid.to_i]
+		end
+
+		def show_all_games    #### NEEDS TEST ####
+			@games.values
+		end
+
+		def get_invite(iid)    #### NEEDS TEST ####
+			@invites[iid.to_i]
+		end
+
+		def show_all_invites    #### NEEDS TEST ####
+			@invites.values
+		end
+
+		def get_session(sid)    #### NEEDS TEST ####
+			@sessions[sid.to_i]
+		end
+
+		def show_all_sessions    #### NEEDS TEST ####
+			@sessions.values
+		end
+
+		# Update methods - CRUD
+		def update_user(uid,name)
+		 	user = @users[uid.to_i]
+			user.name = name
+			user
 		end
 
 		def set_player1_choice(choice, gid)
@@ -89,6 +115,37 @@ module RPS
 			play(game.id)
 			game.player2choice
 		end
+
+		def update_invite_status(iid)
+			@invites[iid].status = "accepted"
+		end
+
+		# Update methods - CRUD
+		def delete_user(uid)
+			@users.delete(uid)
+			@users
+		end
+
+		def delete_match(mid)     #### NEEDS TEST ####
+			@matches.delete(uid)
+			@matches
+		end
+
+		def delete_game(gid)    #### NEEDS TEST ####
+			@games.delete(gid)
+			@games
+		end
+
+		def delete_invite(iid)     #### NEEDS TEST ####
+			@invites.delete(iid)
+			@invites
+		end
+
+		def delete_session(sid)    #### NEEDS TEST ####
+			@sessions.delete(sid)
+			@sessions
+		end
+		
 
 	# Main gameplay functions
 		def play(gid)
@@ -131,19 +188,5 @@ module RPS
 			  end
 		  end
 		end
-
-		def create_invite(inviter_id, invitee_id)
-			invite = Invite.new(inviter_id, invitee_id)
-			@invites[invite.id] = invite
-			invite
-		end
-
-
-		def update_invite_status(id)
-			@invites[id].status = "accepted"
-		end
-
-
 	end
-
 end
