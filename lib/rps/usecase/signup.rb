@@ -1,9 +1,16 @@
 module RPS
   class SignUp < UseCase
     def run(inputs)
+    	@db = RPS.db
+    	
       name = inputs[:name]
       return failure(:name_taken) if RPS.db.get_user_by_name(name) != nil
+      password = inputs[:password]
+      return failure(:weak_password) if password.length < 3
 
+      user = @db.make_user(inputs[:name], inputs[:password])
+
+      success :user => user
     end
   end
 end
