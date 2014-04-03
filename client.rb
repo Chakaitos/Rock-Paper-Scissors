@@ -17,6 +17,40 @@ module RPS
 			puts
 			puts "[1] Sign in\n[2] Sign up"
 
+			sign_command = gets.chomp.to_i
+
+			if sign_command == 1
+				puts "Enter your username"
+				name = gets.chomp
+				puts "Enter your password"
+				password = gets.chomp
+				result = RPS::SignIn.run({:name => name, :password => password})
+			  if result.success?
+			  	puts "#{result.user.name} has signed in successfully."
+			  else
+			  	if result.error == :invalid_name
+			  		puts "That username does not exist."
+			  	elsif result.error == :invalid_password
+			  		puts "The password is incorrect"
+			  	end
+			  end
+			elsif sign_command == 2
+				puts "Enter your username"
+				name = gets.chomp
+				puts "Enter your password"
+				password = gets.chomp
+				result = RPS::SignIn.run({:name => name, :password => password})
+			  if result.success?
+			  	puts "#{result.user.name} successfully signed up, please log in to play."
+			  else
+			  	if result.error == :name_taken
+			  		puts "That username already exists."
+			  	elsif result.error == :weak_password
+			  		puts "The password has to be at least 3 characters"
+			  	end
+			  end
+			end
+
 			command = gets.chomp
 
 		  until command == 'quit' || command == 'q'
