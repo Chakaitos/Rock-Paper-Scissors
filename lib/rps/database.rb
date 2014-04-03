@@ -16,8 +16,8 @@ module RPS
 		end
 
 		# Create methods - CRUD
-		def make_user(name, options={})
-			user = User.new(name, options={})
+		def make_user(name, password)
+			user = User.new(name, password)
 			@users[user.id.to_i] = user
 			user
 		end
@@ -96,7 +96,7 @@ module RPS
 		end
 
 		# Update methods - CRUD
-		def update_user(uid,name)
+		def update_user(uid,name)    #### NEED TESTS FOR PASSWORD ####
 		 	user = @users[uid.to_i]
 			user.name = name
 			user

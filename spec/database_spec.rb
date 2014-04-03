@@ -14,66 +14,65 @@ describe 'Database' do
       expect(@db.sessions).to eq({})
       expect(@db.invites).to eq({})
     end
+  end
+
+  context "with a couple of users" do
+    before do
+      @db = RPS.db
+      @user1 = @db.make_user("john", "abc")
+      @user2 = @db.make_user("joe", "abc")
+    end
 
     it "makes a new user" do
-      expect(@db.make_user("sally").name).to eq("sally")
+      expect(@db.make_user("sally", "abc").name).to eq("sally")
     end
 
-    it "updates the user's name" do
-     jackie = @db.make_user("jackie")
-      @db.update_user(jackie.id,"johnny")
-      expect(jackie.name).to eq("johnny")
-    end
+# TEST NEED TO BE UPDATED FOR PASSWORD
+    # it "updates the user's name" do  
+    #  jackie = @db.make_user("jackie")
+    #   @db.update_user(jackie.id,"johnny")
+    #   expect(jackie.name).to eq("johnny")
+    # end
 
     it "gets user based on id" do
-      jones = @db.make_user("jonesy")
-      expect(@db.get_user(jones.id)).to eq(jones)
+      expect(@db.get_user(@user1.id)).to eq(@user1)
     end
 
     it "deletes a user" do
       # binding.pry
-      jones = @db.make_user("jonesy")
-      expect(@db.delete_user(jones.id)).to eq({})
+      result = @db.delete_user(@user1.id)
+      test = @db.delete_user(@user2.id)
+      expect(test).to eq({})
     end
 
     it "shows all users" do
-      jones = @db.make_user("jonesy")
-      expect(@db.show_all_users).to eq([jones])
+      expect(@db.show_all_users).to eq([@user1, @user2])
     end
 
     it "creates a new match" do
       User.class_variable_set :@@counter, 0
-      john = User.new("john")
-      joe = User.new("joe")
-      match = @db.create_match(john,joe)
+      match = @db.create_match(@user1, @user2)
       expect(match.id).to eq(1)
     end
 
     it "get user by name" do
-      john = @db.make_user("john")
-      test = @db.get_user_by_name(john.name)
+      test = @db.get_user_by_name(@user1.name)
 
-      expect(test).to eq(john)
+      expect(test).to eq(@user1)
     end
 
     it "shows all matches" do
-      john = User.new("john")
-      joe = User.new("joe")
-      match = @db.create_match(john,joe)
+      match = @db.create_match(@user1, @user2)
       expect(@db.show_all_matches).to eq([match])
     end
 
     it "gets a match based on id" do
-      john = User.new("john")
-      joe = User.new("joe")
-      match = @db.create_match(john,joe)
+      match = @db.create_match(@user1, @user2)
       expect(@db.get_match(match.id)).to eq(match)
     end
 
     it "deletes a match using the match id" do
-      john = User.new("john")
-      joe = User.new("joe")
-      match = @db.create_match(john,joe)
+      match = @db.create_match(@user1, @user2)
       expect(@db.matches.count).to eq(1)
       @db.delete_match(match.id)
       expect(@db.matches.count).to eq(0)
@@ -83,17 +82,13 @@ describe 'Database' do
 
     describe "game" do
       it "creates a game" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
         expect(@db.games.count).to eq (1)
       end
 
       it "set player ones choice" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         choice = @db.set_player1_choice("rock",game.id)
@@ -101,9 +96,7 @@ describe 'Database' do
       end
 
       it "set player twos choice" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         choice = @db.set_player2_choice("paper",game.id)
@@ -111,9 +104,7 @@ describe 'Database' do
       end
 
       it "successfully plays the game" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         @db.set_player1_choice("rock",game.id)
@@ -124,21 +115,17 @@ describe 'Database' do
       end
 
       it "sets the winner for the game" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         @db.set_player1_choice("rock",game.id)
         @db.set_player2_choice("paper",game.id)
 
-        expect(game.winner.id).to eq(joe.id)
+        expect(game.winner.id).to eq(@user2.id)
       end
 
       it "creates a new game after a game is complete" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         @db.set_player1_choice("rock",game.id)
@@ -148,9 +135,7 @@ describe 'Database' do
       end
 
       it "only runs if anyone has less than 3 wins" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         @db.set_player1_choice("rock",game.id)
@@ -174,9 +159,7 @@ describe 'Database' do
       end
 
       it "deletes a game" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
         expect(@db.games.count).to eq(1)
         @db.delete_game(game.id)
@@ -186,26 +169,20 @@ describe 'Database' do
 
     describe "invite" do
       it "creates an invite" do
-        john = User.new("john")
-        joe = User.new("joe")
-        @db.create_invite(john, joe)
+        @db.create_invite(@user1, @user2)
 
         expect(@db.invites.count).to eq(1)
       end
 
       it "updates an invite" do
-        john = User.new("john")
-        joe = User.new("joe")
-        invite = @db.create_invite(john, joe)
+        invite = @db.create_invite(@user1, @user2)
         @db.update_invite_status(invite.id)
         expect(@db.invites.count).to eq(1)
         expect(invite.status).to eq("accepted")
       end
 
       it "creates an invite" do
-        john = User.new("john")
-        joe = User.new("joe")
-        invite = @db.create_invite(john, joe)
+        invite = @db.create_invite(@user1, @user2)
         expect(@db.invites.count).to eq(1)
         @db.delete_invite(invite.id)
 
@@ -213,41 +190,34 @@ describe 'Database' do
       end
 
       it "gets an invite by id" do
-        john = User.new("john")
-        joe = User.new("joe")
-        invite = @db.create_invite(john, joe)
+        invite = @db.create_invite(@user1, @user2)
         expect(@db.invites.count).to eq(1)
       end
     end
 
     describe "session" do
       it "creates a session" do
-        john = User.new("john")
-        joe = User.new("joe")
-        session = @db.create_session(john.id)
+        session = @db.create_session(@user1.id)
 
         expect(@db.sessions.count).to eq(1)
       end
 
       it "get user by session" do
-        john = User.new("john")
-        session = @db.create_session(john.id)
+        session = @db.create_session(@user1.id)
         test = @db.get_user_by_session(session.id)
 
-        expect(test).to eq(john.id)
+        expect(test).to eq(@user1.id)
       end
 
       it "gets a session by id" do
-        john = User.new("john")
-        session = @db.create_session(john.id)
+        session = @db.create_session(@user1.id)
         test = @db.get_session(session.id)
 
         expect(test.id).to eq(session.id)
       end
 
       it "deletes a session" do
-        john = User.new("john")
-        session = @db.create_session(john.id)
+        session = @db.create_session(@user1.id)
         test = @db.delete_session(session.id)
 
         expect(@db.sessions).to eq({})
@@ -256,43 +226,32 @@ describe 'Database' do
 
     describe "list" do
       it "lists all the games" do
-        john = User.new("john")
-        joe = User.new("joe")
-        match = @db.create_match(john,joe)
+        match = @db.create_match(@user1, @user2)
         game = @db.create_game(match.id)
 
         expect(@db.show_all_games).to eq([game])
       end
 
       it "lists all the invites" do
-        john = User.new("john")
-        joe = User.new("joe")
-        invite = @db.create_invite(john.id, joe.id)
+        invite = @db.create_invite(@user1.id, @user2.id)
 
         expect(@db.show_all_invites).to eq([invite])
       end
 
       it "lists all the sessions" do
-        john = User.new("john")
-        joe = User.new("joe")
-        session1 = @db.create_session(joe.id)
-        session2 = @db.create_session(john.id)
+        session1 = @db.create_session(@user2.id)
+        session2 = @db.create_session(@user1.id)
 
         expect(@db.show_all_sessions).to eq([session1,session2])
       end
 
       it "lists all the matches" do
-        john = User.new("john")
-        joe = User.new("joe")
-        becky = User.new("becky")
-        match = @db.create_match(john,joe)
-        match1 = @db.create_match(john,becky)
+        becky = User.new("becky", "abc")
+        match = @db.create_match(@user1, @user2)
+        match1 = @db.create_match(@user1,becky)
 
         expect(@db.show_all_matches).to eq([match,match1])
       end
-
     end
-
-
   end
 end

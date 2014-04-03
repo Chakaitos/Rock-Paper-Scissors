@@ -4,7 +4,7 @@ describe 'Sessions' do
 
   it "initializes with a unique session id" do
     User.class_variable_set :@@counter, 0
-    user = User.new("hi")
+    user = User.new("hi", "abc")
     session = RPS::Session.new(user.id)
     expect(session.user_id).to eq(user.id)
   end

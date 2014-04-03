@@ -2,19 +2,12 @@ class User
   attr_accessor :name, :password
   attr_reader :id
   @@counter = 0
-  def initialize(name, options={})
+  def initialize(name, password)
     @@counter += 1
     @id = @@counter
     @name = name
-    @password = options[:password]
+    @password = password
     @match_wins = []
     @match_loses = []
   end
-
-  def set_password(password)
-    if @password == nil
-      @password = password
-    end
-  end
-
 end
