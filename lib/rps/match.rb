@@ -1,6 +1,6 @@
 class Match
 attr_reader :player1, :player2, :id
-attr_accessor :player1wins, :player2wins
+attr_accessor :player1wins, :player2wins, :winner
 @@counter = 0;
   def initialize(player1, player2)
     @player1 = player1
@@ -10,6 +10,7 @@ attr_accessor :player1wins, :player2wins
     @player1wins = 0
     @player2wins = 0
     @games = []
+    @winner = nil
   end
 
   def play_game(choice1, choice2)
