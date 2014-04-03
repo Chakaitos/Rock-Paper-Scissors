@@ -28,7 +28,7 @@ describe 'Database' do
     end
 
 # TEST NEED TO BE UPDATED FOR PASSWORD
-    # it "updates the user's name" do  
+    # it "updates the user's name" do
     #  jackie = @db.make_user("jackie")
     #   @db.update_user(jackie.id,"johnny")
     #   expect(jackie.name).to eq("johnny")
@@ -78,7 +78,21 @@ describe 'Database' do
       expect(@db.matches.count).to eq(0)
     end
 
+    it "declares a winner to a match if 3 games are won" do
+        match = @db.create_match(@user1, @user2)
+        game = @db.create_game(match.id)
 
+        @db.set_player1_choice("rock",game.id)
+        @db.set_player2_choice("paper",game.id)
+
+        @db.set_player1_choice("rock",game.id)
+        @db.set_player2_choice("paper",game.id)
+
+        @db.set_player1_choice("rock",game.id)
+        @db.set_player2_choice("paper",game.id)
+
+        expect(match.winner).to eq(@user2)
+    end
 
     describe "game" do
       it "creates a game" do

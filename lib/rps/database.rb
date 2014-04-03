@@ -163,26 +163,32 @@ module RPS
 			    elsif player1move == 'rock' && player2move == 'paper'
 			    	game.winner = player2
 			      match.player2wins += 1
+			      match.winner = player2 if match.player2wins == 3
 			    	create_game(match.id)
 			    elsif player1move == 'rock' && player2move == 'scissors'
 			    	game.winner = player1
 			      match.player1wins += 1
+			      match.winner = player1 if match.player1wins == 3
 			    	create_game(match.id)
 			    elsif player1move == 'paper' && player2move == 'rock'
 			    	game.winner = player1
 			      match.player1wins += 1
+			      match.winner = player1 if match.player1wins == 3
 			    	create_game(match.id)
 			    elsif player1move == 'paper' && player2move == 'scissors'
 			    	game.winner = player2
 			      match.player2wins += 1
+			      match.winner = player2 if match.player2wins == 3
 			    	create_game(match.id)
 			    elsif player1move == 'scissors' && player2move == 'rock'
 			    	game.winner = player2
 			      match.player2wins += 1
+			      match.winner = player2 if match.player2wins == 3
 			    	create_game(match.id)
 			    elsif player1move == 'scissors' && player2move == 'paper'
 			    	game.winner = player1
 			      match.player1wins += 1
+			      match.winner = player1 if match.player1wins == 3
 			    	create_game(match.id)
 			    end
 			  end
