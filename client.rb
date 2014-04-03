@@ -79,17 +79,21 @@ module RPS
 					  end
 					  command = gets.chomp
 					end
+				
 				when 'users'
 					case action
 					when 'list'
 						users_list
 				end
+			
 			when 'match'
 				case action
 				when 'list'
 					match_list
 				end
-
+			end
+			when 'invites'
+				invite_list
 
 			end
 		end
@@ -97,12 +101,20 @@ module RPS
 		def users_list
 			users = @db.show_all_users
 			puts "User List: [ID]:   [NAME]"
-			users.each{|x| puts "			  #{x.id}:   #{x.name}"}
+			users.each{|x| puts "           #{x.id}:   #{x.name}"}
 			
 		end
 
 		def match_list
 			matches = @db.show_all_matches
+			puts "Match List: [ID]"
+			matches.each{|x| puts "           #{x.id} "}
+		end
+
+		def invite_list
+			@db.show_all_invites
+			puts "Pending Invites: [ID]"
+			invites.each{|x| puts "                 #{x.id}"}
 		end
 
 
