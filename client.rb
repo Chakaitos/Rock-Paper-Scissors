@@ -44,24 +44,31 @@ module RPS
 					  end
 					  command = gets.chomp
 					end
+				when 'users'
+					case action
+					when 'list'
+						users_list
+				end
+			when 'match'
+				case action
+				when 'list'
+					match_list
 				end
 
 
 			end
 		end
 
-		def help
-			puts "Available Commands:
-  			\tusers list - List all users
-  			\tmatch list - List active matches
-  			\tmatch play MID - Start playing game with id=MID
-  			\tinvites - List all pending invites
-  			\tinvite accept IID - Accept invite with id=IID
-  			\tinvite create USERNAME - Invite user with username=USERNAME to play a game
-				\tmatch list"
+		def users_list
+			users = @db.show_all_users
+			puts "User List: [ID]:   [NAME]"
+			users.each{|x| puts "			  #{x.id}:   #{x.name}"}
+			
 		end
 
-
+		def match_list
+			matches = @db.show_all_matches
+		end
 
 
 
