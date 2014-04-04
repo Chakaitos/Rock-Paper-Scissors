@@ -2,14 +2,14 @@ class Match
 attr_reader :player1, :player2, :id
 attr_accessor :player1wins, :player2wins, :winner
 @@counter = 0;
-  def initialize(player1, player2)
-    @player1 = player1
-    @player2 = player2
-    @@counter+=1
+  def initialize(player1_id, player2_id)
+    @player1_id = player1_id
+    @player2_id = player2_id
+    @@counter += 1
     @id = @@counter
     @player1wins = 0
     @player2wins = 0
-    @games = []
+    # @games = []
     @winner = nil
   end
 

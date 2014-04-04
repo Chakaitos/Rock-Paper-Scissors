@@ -8,7 +8,7 @@ class Game
     @@counter +=1
     @id = @@counter
     @game_counter = 1
-    @mid = mid
+    @match_id = mid
     @player1choice = nil
     @player2choice = nil
     @winner = nil

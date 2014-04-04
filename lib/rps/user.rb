@@ -7,7 +7,7 @@ class User
     @id = @@counter
     @name = name
     @password = password
-    @match_wins = []
-    @match_loses = []
+    # @match_wins = []
+    # @match_loses = []
   end
 end

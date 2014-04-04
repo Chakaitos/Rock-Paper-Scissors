@@ -7,6 +7,6 @@ class Invite
       @inviter_id = inviter_id
       @invitee_id = invitee_id
       @status = "pending"
-      @mid = nil
+      @match_id = nil
     end
 end

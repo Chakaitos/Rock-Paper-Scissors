@@ -6,7 +6,7 @@ module RPS
 
 	class DB
 		# attr_reader :users, :matches, :games, :sessions
-		attr_accessor :users, :matches, :games, :sessions, :invites
+		attr_accessor :users, :matches, :games, :sessions, :invites, :matches_users
 		def initialize
 			@users = {}
 			@matches = {}
@@ -22,8 +22,8 @@ module RPS
 			user
 		end
 
-		def create_match(user1,user2)
-			match = Match.new(user1,user2)
+		def create_match(user1_id,user2_id)
+			match = Match.new(user1_id,user2_id)
 			@matches[match.id.to_i] = match
 			match
 		end
