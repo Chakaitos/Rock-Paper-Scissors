@@ -274,4 +274,36 @@ describe 'Database' do
       end
     end
   end
+
+  describe "Persistence" do
+    before do
+      @user1 = @db.make_user('Jose', 'abc')
+      @user2 = @db.make_user('Drew', 'drewv')
+    end
+    it "has persistence for users" do
+      # This should save to the db
+      # Here we create a **new** db instance. It should have access
+      # to the users we created with the original db instance.
+      other_db = TM::DB.new('rps_test.db')
+      expect(other_db.show_all_user.count).to eq 2
+
+      names = other_db.show_all_users.map(&:name)
+      passwords = other_db.show_all_users.map(&:password)
+      expect(names).to include(@user1.name, @user2.name)
+      expect(passwords).to include(@user1.password, @user2.password)
+    end
+
+    it "has persistence for matches" do
+      # This should save to the db
+      match = @db.create_match(@user1.id, @user2.id)
+
+      # Here we create a **new** db instance. It should have access
+      # to the projects we created with the original db instance.
+      other_db = TM::DB.new('rps_test.db')
+      expect(other_db.show_all_matches.count).to eq 1
+
+      player1 = other_db.show_all_matches.map(&:)
+      expect(descriptions).to include("Hello", "World")
+    end
+  end
 end
