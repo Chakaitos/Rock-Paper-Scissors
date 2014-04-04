@@ -147,8 +147,8 @@ module RPS
 			puts "\tinvite accept IID - Accept invite with id=IID"
 			puts "\tinvite create USERNAME - Invite user with username=USERNAME to play a game"
 
-				RPS::TerminalClient.run_commands
-			end
+			RPS::TerminalClient.run_commands
+		end
 
 		def self.users_list
 			users = @db.show_all_users
@@ -179,18 +179,18 @@ module RPS
 		end
 
 		def self.create_invite
-	  	user_to_invite = @params
-	  	user = @db.get_user_by_name(user_to_invite)
-	  	binding.pry
-		  result = RPS::CreateInvite.run({ :session_id => @session_id, :invitee_id => user.id})
+		  result = RPS::CreateInvite.run({:session_id => @session_id, :invitee_id => @params})
 		  if result.success?
 		  	puts "Invite sent from #{result.inviter.name} to #{result.invitee.name}."
 		  else
 		  	if result.error == :invitee_not_found
 		  		puts "Invitee not found!"
+		  	elsif result.error == :session_not_found
+		  		puts "Session not found!"
 		  	end
 		  end
 		end
+
 
 		def self.sign_out
 			@db.delete_session(@session_id)

@@ -48,7 +48,7 @@ module RPS
 
 		# Read methods - CRUD
 		def get_user(uid)
-			@users[uid.to_i]
+			@users[uid]
 		end
 
 		def show_all_users
