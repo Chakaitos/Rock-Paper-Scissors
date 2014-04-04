@@ -1,7 +1,11 @@
 module RPS
 
 	def self.db
-		@__db_instance ||= DB.new
+		@__db_instance ||= DB.new(@app_db_name)
+	end
+
+	def self.db_name=(db_name)
+		@app_db_name = db_name
 	end
 
 	class DB

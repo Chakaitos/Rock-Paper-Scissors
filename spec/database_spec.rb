@@ -293,17 +293,17 @@ describe 'Database' do
       expect(passwords).to include(@user1.password, @user2.password)
     end
 
-    it "has persistence for matches" do
-      # This should save to the db
-      match = @db.create_match(@user1.id, @user2.id)
+    # it "has persistence for matches" do
+    #   # This should save to the db
+    #   match = @db.create_match(@user1.id, @user2.id)
 
-      # Here we create a **new** db instance. It should have access
-      # to the projects we created with the original db instance.
-      other_db = TM::DB.new('rps_test.db')
-      expect(other_db.show_all_matches.count).to eq 1
+    #   # Here we create a **new** db instance. It should have access
+    #   # to the projects we created with the original db instance.
+    #   other_db = TM::DB.new('rps_test.db')
+    #   expect(other_db.show_all_matches.count).to eq 1
 
-      player1 = other_db.show_all_matches.map(&:)
-      expect(descriptions).to include("Hello", "World")
-    end
+    #   player1 = other_db.show_all_matches.map(&:)
+    #   expect(descriptions).to include("Hello", "World")
+    # end
   end
 end

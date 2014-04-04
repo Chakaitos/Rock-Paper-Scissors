@@ -29,8 +29,8 @@ sqlite.execute %q{
     player1_id      INT     NOT NULL,
     player2_id      INT     NOT NULL,
     player1wins     INT     NOT NULL,
-    player2wins     INT     NOT NULL, 
-    winner          TEXT,     
+    player2wins     INT     NOT NULL,
+    winner          TEXT,
     FOREIGN KEY(player1_id) REFERENCES users(id),
     FOREIGN KEY(player2_id) REFERENCES users(id)
   );
@@ -41,7 +41,7 @@ sqlite.execute %q{
     match_id        INT     NOT NULL,
     player1choice   TEXT,
     player2choice   TEXT,
-    winner          TEXT,    
+    winner          TEXT,
     FOREIGN KEY(match_id) REFERENCES matches(id)
   );
 }
