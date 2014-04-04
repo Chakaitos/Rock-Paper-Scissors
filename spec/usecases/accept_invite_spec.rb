@@ -34,7 +34,7 @@ describe RPS::AcceptInvite do
     result = subject.run({ :session_id => @session.id, :invite_id => @invite.id })
     expect(result.success?).to eq(true)
     match = result.match
-    expect(match.player1).to eq(@user2.id)
-    expect(match.player2).to eq(@user1.id)
+    expect(match.player1.id).to eq(@user2.id)
+    expect(match.player2.id).to eq(@user1.id)
   end
 end

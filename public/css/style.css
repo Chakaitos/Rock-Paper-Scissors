@@ -1,0 +1,13 @@
+.right {
+  float: right;
+}
+
+.rps {
+  width: auto;
+  height: auto;
+}
+
+body {
+  margin: 0;
+  font-family:"Arial Black", Gadget, sans-serif;
+}

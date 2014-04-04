@@ -5,10 +5,9 @@ module RPS
 
       session_key = inputs[:session_id]
       inviter = @db.get_user_by_session(session_key)
-      invitee = @db.get_user_by_name(inputs[:invitee_id])
+      invitee = @db.get_user(inputs[:invitee_id])
       # binding.pry
       inviter_user = @db.get_user(inviter)
-
 
       session = @db.get_session(inputs[:session_id])
       return failure(:session_not_found) if session.nil?
