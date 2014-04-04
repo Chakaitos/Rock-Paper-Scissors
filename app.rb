@@ -1,0 +1,8 @@
+require_relative './lib/rps.rb'
+require 'sinatra'
+
+set :bind, '0.0.0.0'
+
+get '/' do
+  erb :home
+end

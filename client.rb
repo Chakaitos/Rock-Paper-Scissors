@@ -21,18 +21,19 @@ module RPS
 
 			puts "[1] Sign in\n[2] Sign up \n[3] To Exit"
 
-			sign_command = gets.chomp
+			sign_command = gets.chomp.to_i
 
-			if sign_command.to_i == 1
+		case sign_command
+			when 1
 				RPS::TerminalClient.sign_in
-			elsif sign_command.to_i == 2
+			when 2
 				RPS::TerminalClient.sign_up
-			elsif sign_command.to_i == 3
-				puts "Have a nice day!"
+			when 3
+				RPS::TerminalClient.good_bye
 			else
 				puts "Wrong Input!"
 				RPS::TerminalClient.start
-			end
+		end
 
 		end #Ends the start method
 
@@ -82,8 +83,6 @@ module RPS
 		def self.run_commands
 			command = gets.chomp
 
-		  until command == 'quit' || command == 'q'
-
 				category = command.split(' ')[0].downcase
 				action = command.split(' ')[1].downcase
 				@params = command.split(' ')[2..-1].join(' ')
@@ -98,6 +97,9 @@ module RPS
 			  		case action
 					  when "create"
 							RPS::TerminalClient.create_invite
+						  command = gets.chomp
+						when "accept"
+							RPS::TerminalClient.accept_invite
 						  command = gets.chomp
 						# Lists all the invites
 						when 'list'
@@ -120,10 +122,10 @@ module RPS
 						when 'list'
 							RPS::TerminalClient.match_list
 							command = gets.chomp
+						when "play"
+							RPS::TerminalClient.play_game
+							command = gets.chomp
 						end
-
-
-
 
 
 					# Signs out the user
@@ -135,7 +137,6 @@ module RPS
 
 					end #Ends the category
 
-			end #Ends the until loop
 		end #Ends the run commands method
 
 		def self.help
@@ -159,11 +160,11 @@ module RPS
 
 		def self.match_list
 			result = RPS::ListActiveMatches.run({:session_id => @session_id})
-			if result.error?
-				puts "There were no matches"
-			else
+			if result.success?
 				puts "Match List: [ID]"
-				matches.each{|x| puts "           #{x.id} "}
+				result.matches.each{|x| puts "           #{x.id} "}
+			elsif result.error?
+				puts "There were no matches"
 			end
 		end
 
@@ -191,12 +192,38 @@ module RPS
 		  end
 		end
 
+		def self.accept_invite
+			result = RPS::AcceptInvite.run({:session_id => @session_id, :invite_id => @params})
+			if result.success?
+				puts "Match has begun with match ID: #{result.match.id}"
+			else
+				if result.error == :invite_not_found
+					puts "Invite not found!"
+				elsif result.error == :user_not_invited
+					puts "User not invited!"
+				end
+			end
+		end
+
+		def self.play_game
+			puts "Choose 'rock','paper', or 'scissors':"
+			move = gets.chomp
+			result = RPS::PlayMove.run({:session_id => @session_id, :match_id => @params.to_i, :move => move})
+			if result.success?
+				puts "Decision decided."
+			elsif result.error == :move_not_valid
+				puts "That move is not valid!"
+			end
+		end
 
 		def self.sign_out
 			@db.delete_session(@session_id)
 			RPS::TerminalClient.start
 		end
 
+		def self.good_bye
+			puts "Bye!"
+		end
 
 	end
 end

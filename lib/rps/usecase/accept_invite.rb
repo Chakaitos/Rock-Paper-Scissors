@@ -11,7 +11,10 @@ module RPS
       user_id = @db.get_user_by_session(inputs[:session_id])
       return failure(:user_not_invited) if invite.invitee_id != user_id
 
-      match = @db.create_match(invite.inviter_id, invite.invitee_id)
+
+      user1 = @db.get_user(invite.inviter_id)
+      user2 = @db.get_user(invite.invitee_id)
+      match = @db.create_match(user1, user2)
 
       success :match => match
     end

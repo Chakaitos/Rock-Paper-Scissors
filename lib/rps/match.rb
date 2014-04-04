@@ -20,3 +20,4 @@ attr_accessor :player1wins, :player2wins, :winner
   end
 
 end
+
